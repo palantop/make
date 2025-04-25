@@ -1,0 +1,12 @@
+import numpy as np
+def outliers_iqr(dt, col):
+    q1, q3 = np.percentile(dt[col], [25, 75])
+    iqr = q3 - q1
+    outlier_bottom = q1 - (1.5 * iqr)
+    outlier_top = q3 + (1.5 * iqr)
+    outliers_1 = dt[col] < outlier_bottom
+    outliers_2 = dt[col] > outlier_top
+    outliers = dt[outliers_1 | outliers_2]
+    return outliers[[col]]
+find_outliers = outliers_iqr(df, 'Fare')
+find_outliers
